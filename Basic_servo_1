@@ -1,0 +1,29 @@
+/*
+*A servo is very useful in many projects!
+*A Servo is a small device that has an output shaft. 
+*This shaft can be positioned to specific angular positions by sending the servo a coded signal. 
+*That's why we need the Arduino, in oder to send that signal to the servo. 
+*Servos in general require a lot of current to operate since they have a motor inside. 
+*If you only need to control one small servo like this one you can connect it directly to Arduino. 
+*If you need to control two or more servos you need an external power supply or battery pack. 
+*/
+
+void setup() {
+  servo.attach(8);
+  servo.write(angle);
+}
+void loop() 
+{ 
+ // scan from 0 to 180 degrees
+  for(angle = 10; angle < 180; angle++)  
+  {                                  
+    servo.write(angle);               
+    delay(15);                   
+  } 
+  // now scan back from 180 to 0 degrees
+  for(angle = 180; angle > 10; angle--)    
+  {                                
+    servo.write(angle);           
+    delay(15);       
+  } 
+}
