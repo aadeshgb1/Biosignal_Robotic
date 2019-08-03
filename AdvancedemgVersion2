@@ -1,0 +1,103 @@
+#include<Servo.h>
+Servo thumb,  index,  middle, ring, little;
+int   H = 180,  L = 0,  a = 0, threshold = 0;
+unsigned long timeinterval, previousMillis, currentMillis;
+void setup() {
+  thumb.attach(3);
+  index.attach(5);
+  middle.attach(6);
+  ring.attach(9);
+  little.attach(10);
+  thumb.write(0);
+  index.write(0);
+  middle.write(0);
+  ring.write(0);
+  little.write(0);
+  pinMode(A0, INPUT);
+  Serial.begin(9600);
+}
+void loop() {
+  threshold = analogRead(A0);
+  if (threshold >= 800)
+  {
+    timeinterval = 0;
+    previousMillis = millis();
+    while (threshold >= 800)
+    {
+      threshold = analogRead(A0);
+      currentMillis = millis();
+    }
+    timeinterval = currentMillis - previousMillis;
+  }
+
+  Serial.println(timeinterval);
+  if (1000 < timeinterval && timeinterval < 3000)
+    a = 1;
+  else  if (3000 < timeinterval && timeinterval < 5000)
+    a = 2;
+  else  if (5000 < timeinterval && timeinterval < 7000)
+    a = 3;
+  else  if (7000 < timeinterval && timeinterval < 9000)
+    a = 4;
+  else  if (9000 < timeinterval && timeinterval < 10000)
+    a = 5;
+  else
+    a = 0;
+  switch (a)
+  {
+    case  1:
+      {
+        thumb.write(L);
+        index.write(H);
+        middle.write(H);
+        ring.write(H);
+        little.write(H);
+        break;
+      }
+    case  2:
+      {
+        thumb.write(H);
+        index.write(L);
+        middle.write(H);
+        ring.write(H);
+        little.write(L);
+        break;
+      }
+    case  3:
+      {
+        thumb.write(H);
+        index.write(L);
+        middle.write(L);
+        ring.write(H);
+        little.write(H);
+        break;
+      }
+    case  4:
+      {
+        thumb.write(L);
+        index.write(L);
+        middle.write(L);
+        ring.write(H);
+        little.write(L);
+        break;
+      }
+    case  5:
+      {
+        thumb.write(L);
+        index.write(L);
+        middle.write(L);
+        ring.write(L);
+        little.write(H);
+        break;
+      }
+    default:
+      {
+        thumb.write(L);
+        index.write(L);
+        middle.write(L);
+        ring.write(L);
+        little.write(L);
+        break;
+      }
+  }
+}
